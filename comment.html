@@ -1,0 +1,67 @@
+%from api import sx
+%subj = ''
+<!doctype html>
+                <html>
+                <head>
+                    <meta charset="utf-8">
+                    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                
+                    <title>Добавить комментарий</title>
+<style>
+aside {
+    background: #1f8dd6; /* same color as selected state on site menu */
+    margin: 1em 0;
+    padding: 0.3em 1em;
+    border-radius: 3px;
+    color: #fff;
+}</style>
+                    <link rel="stylesheet" href="/s/pure.css"></head>
+                
+
+                <body>
+            <div class="pure-g">
+                <div class="pure-u-1-6">
+                </div>
+                <div class="pure-u-5-6">
+
+%if prev:
+            <aside>
+                <p>{{!sx.rend(prev.txt.decode('utf-8'))}}</p>
+            </aside>
+
+%subj = prev.title if prev.title.startswith('Re: ') else 'Re: %s' % prev.title
+%end
+
+
+
+<form class="pure-form" method="post" action="/new">
+    <fieldset class="pure-group">
+        <input type="hidden" name="typ" value="{{typ}}">
+        <input type="hidden" name="ea" value="{{ea}}">
+%if topicid and topicid != '-':
+        <input type="hidden" name="topicid" value="{{topicid}}">
+%end
+%if repto and repto != '-':
+        <input type="hidden" name="repto" value="{{repto}}">
+%end
+
+        <input type="text" class="pure-input-1" placeholder="Ваше имя" name="who">
+
+        <input type="hidden" name="to" value="{{prev.who or 'All'}}">
+    </fieldset>
+
+    <fieldset class="pure-group">
+        <input type="text" class="pure-input-1" value="{{subj}}" placeholder="Заголовок сообщения" name="title">
+        <textarea class="pure-input-1" placeholder="Текст сообщения" name="txt"></textarea>
+%if topicid == '-':
+        <input type="text" class="pure-input-1" value="" placeholder="Тэги (опционально, через запятую)" name="tags">
+%end
+    </fieldset>
+
+    <button type="submit" class="pure-button pure-input-1 pure-button-primary">Отправить сообщение</button>
+</form>
+
+                </div>
+            </div>
+                </body>
+                </html>

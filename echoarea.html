@@ -1,0 +1,48 @@
+%from api import sx
+%include ('01.tpl',u=u,title=title)
+<body>
+%include ('01b.tpl',u=u,ea=ea,title=title,now='echo')
+
+            <div class="grid-container">
+                <div class="large-12 cell">
+
+
+<h1>{{title}} <small>{{desc}}</small></h1>
+
+%for o in mo[(pge*80):][:80]:
+<div class="callout {{'secondary' if o.repto else 'primary'}}">
+
+<span class="pull-right">
+%if title != o.ea:
+<a class="pure-button pure-u-1" href="/echo/{{o.ea}}" style="color:black">{{o.ea}}</a> ..
+%end
+<a class="pure-button pure-u-1" href="/new/echo/{{o.ea}}/{{o.topicid}}/{{o.msgid}}">Ответить</a></p>
+</span>
+
+<a href="/carbon/_{{sx.hsh(o.who)}}/{{o.who}}">{{o.who}}</a>
+to
+<a href="/carbon/{{sx.hsh(o.to)}}/{{o.to}}">{{o.to}}</a>
+{{sx.dateg(o.date)}} : <b>{{o.title}}</b><br><br>
+<p>{{!sx.rend(o.txt.decode('utf-8'))}}</p>
+</div>
+%end
+
+
+%pages = 1+((len(mo)-1) // 80)
+%if ea and pages > 1:
+<ul class="pagination" role="navigation" aria-label="Pagination">
+%for x in range(pages):
+%if x == pge:
+  <li class="current">{{x+1}}</li>
+%else:
+  <li><a href="/echo/{{ea}}?page={{x+1}}">{{x+1}}</a></li>
+%end
+%end
+</ul>
+%end
+
+
+                </div>
+            </div>
+
+%include('02.tpl',u=u)

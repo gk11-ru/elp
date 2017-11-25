@@ -1,0 +1,43 @@
+%from api import sx, echo_desc
+%include ('01.tpl',u=u,title='%s :%s - Форум' % (echo_desc(ea), ea))
+<body>
+%include ('01b.tpl',u=u,title=ea,ea=ea,now='forum')
+
+
+%pages = 1+((len(out)-1) // 50)
+
+
+            <div class="grid-container"><div class="grid-x">
+                <div class="large-12 cell">
+
+                <h2>{{echo_desc(ea)}} <small>:{{ea}}</small></h2>
+
+            <table class="pure-table pure-table-striped">
+%for x in reversed(out[-50-(pge*50):][:50]):
+            <tr>
+%t=len(x.topic)-5
+                <td><span class="badge {{'alert' if t>100 else 'warning' if t>50 else 'success' if t>20 else 'secondary' if t == 1 else ''}}">{{t}}</span> <a href="/topic/{{x.topic[5]}}">{{x.topic[1]}}</a></td>
+                <td><b>{{x.topic[3]}}</b></td>
+                <td>{{sx.dateg(x.topic[0])}} UTC</td>
+                <td><a href="/topic/{{x.topic[5]}}#go_{{x.topic[-1]}}">последнее от <b>{{x.lastuser}}</b>, {{sx.dateg(x.lastdate)}}</a></td>
+            </tr>
+%end
+            </table>
+
+
+%if pages > 1:
+<ul class="pagination" role="navigation" aria-label="Pagination">
+%for x in range(pages):
+%if x == pge:
+  <li class="current">{{x+1}}</li>
+%else:
+  <li><a href="/forum/{{ea}}?page={{x+1}}">{{x+1}}</a></li>
+%end
+%end
+</ul>
+%end
+
+                </div>
+            </div></div>
+
+%include ('02.tpl',u=u)

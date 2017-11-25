@@ -1,0 +1,107 @@
+%from api import sx, echo_desc
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="A layout example that shows off a blog page with a list of posts.">
+    <title>Блог : {{mo[0].title}}</title>
+    
+    <link rel="stylesheet" href="/s/pure-min.css">
+    
+    <!--[if lte IE 8]>
+        <link rel="stylesheet" href="/s/grids-responsive-old-ie-min.css">
+    <![endif]-->
+    <!--[if gt IE 8]><!-->
+        <link rel="stylesheet" href="/s/grids-responsive-min.css">
+    <!--<![endif]-->
+    
+    
+        <!--[if lte IE 8]>
+            <link rel="stylesheet" href="/s/blog-old-ie.css">
+        <![endif]-->
+        <!--[if gt IE 8]><!-->
+            <link rel="stylesheet" href="/s/blog.css">
+        <!--<![endif]-->
+
+<style>
+        .button-xsmall {
+            font-size: 70%;
+        }
+</style>
+</head>
+<body>
+
+
+
+
+
+
+
+<div id="layout" class="pure-g">
+    <div class="content pure-u-1">
+        <div>
+            <!-- A wrapper for all the blog posts -->
+            <div class="posts">
+                <h1 class="content-subhead"><A href="/blog/{{mo[0].ea}}">{{mo[0].ea}}</a> {{echo_desc(mo[0].ea)}}</h1>
+
+                <!-- A single blog post -->
+%istitle = True
+%for o in mo:
+<a name="go_{{o.msgid}}"></a>
+                <section class="post">
+                    <header class="post-header">
+
+%if istitle:
+                        <h2 class="post-title">{{o.title}}</h2>
+%end
+
+                        <p class="post-meta">
+                            <a href="/carbon/_{{sx.hsh(o.who)}}/{{o.who}}" class="post-author">{{o.who}}</a>
+%if not istitle:
+to <a href="/carbon/{{sx.hsh(o.to)}}/{{o.to}}" class="post-author">{{o.to}}</a>
+%end
+                            @ {{sx.dateg(o.date,'%d.%m.%y %H:%M')}} UTC
+%if o.tags:
+%for i,tag in enumerate(o.tags.split(',')):
+<a class="post-category post-category-{{i % 5}}" href="/tag/{{tag}}">{{sx.b64d(tag)}}</a>
+%end
+%end
+                        </p>
+                    </header>
+
+                    <div class="post-description">
+                        <p>
+            {{!sx.rend(o.txt.decode('utf-8'))}}
+                        </p>
+                    </div>
+
+                    <p><a href="/new/blog/{{mo[0].ea}}/{{mo[0].msgid}}/{{o.msgid}}" class="pure-button button-xsmall">ответить</a></p>
+
+
+%istitle=False
+                </section>
+%end
+
+
+            </div>
+
+            <div class="footer">
+                <div class="pure-menu pure-menu-horizontal">
+                    <ul>
+                        <li class="pure-menu-item"><a href="/start" class="pure-menu-link">Старт</a></li>
+                        <li class="pure-menu-item"><a href="/forum/{{mo[0].ea}}" class="pure-menu-link">Форум</a></li>
+                        <li class="pure-menu-item"><a href="/echo/{{mo[0].ea}}" class="pure-menu-link">Конференция</a></li>
+<!--                        <li class="pure-menu-item"><a href="/lenta" class="pure-menu-link">Лента</a></li> -->
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+</body>
+</html>

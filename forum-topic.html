@@ -1,0 +1,43 @@
+%from api import sx
+%include ('01.tpl',u=u,title='%s :%s - Форум' % (topic[1], topic[2]))
+<body>
+%include ('01ft.tpl',u=u,ea=topic[2])
+
+
+            <div class="grid-container"><div class="grid-x">
+                <div class="large-12 cell">
+
+<br />
+
+%for x in topic[5:]:
+%o = msgs[x]
+<a name="go_{{x}}"></a>
+<table class="unstriped hover"><tr style="color:grey">
+<td><b>{{o.who}}</b> для {{o.to}}</td>
+<td>{{sx.dateg(o.date)}} UTC</td>
+<td>{{o.addr}}</td>
+<td>{{o.msgid}}</td>
+<td>{{o.ea}}</td>
+<td>{{o.title}}</td>
+<td><a href="/new/forum/{{topic[2]}}/{{topic[5]}}/{{x}}">ответить</a></td>
+</tr></table>
+<div class="callout clearfix">{{!sx.rend(o.txt.decode('utf-8'))}}</div>
+
+%if o.tags:
+<div align="right">
+%for tag in o.tags.split(','):
+<a class="tiny alert hollow button" href="/tag/{{tag}}">{{sx.b64d(tag)}}</a>
+%end
+</div>
+%end
+
+
+<br /><br />
+%end
+
+
+                </div>
+            </div></div>
+
+
+%include ('02.tpl',u=u)

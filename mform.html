@@ -1,0 +1,58 @@
+%from api import sx
+
+%subj = ''
+%include ('01.tpl', title=u'Ответ в эху %s' % ea,u=u)
+
+<body>
+
+<div class="grid-container"><div class="grid-x"><div class="large-12 cell">
+        <strong><a href="/{{typ}}/{{ea}}" class="secondary button">
+          :{{ea}}
+        </a></strong>
+     <span class="float-right">
+        <a href="/user/me" class="button primary">{{u.uname}}</a>
+        <a href="/" title="Стартовая страница" class="secondary button"><i class="fa fa-home"></i></a>
+      </span>
+
+
+
+%if prev:
+            <div class="callout secondary">
+                <p>{{!sx.rend(prev.txt.decode('utf-8'))}}</p>
+            </div>
+
+%subj = prev.title if prev.title.startswith('Re: ') else 'Re: %s' % prev.title
+%end
+
+
+
+<form class="form-horizontal" role="form" method="post" enctype="multipart/form-data" action="/new">
+        <input type="hidden" name="typ" value="{{typ}}">
+        <input type="hidden" name="ea" value="{{ea}}">
+%if topicid and topicid != '-':
+        <input type="hidden" name="topicid" value="{{topicid}}">
+%end
+%if repto and repto != '-':
+        <input type="hidden" name="repto" value="{{repto}}">
+%end
+
+        <input type="hidden" name="to" value="{{prev.who or 'All'}}">
+
+        <input type="text" name="title" value="{{subj}}" class="form-control" id="subjInput" placeholder="Тема сообщения">
+        <textarea name="txt" class="form-control" style="height:300px" placeholder="Текст сообщения"></textarea>
+%if topicid == '-':
+        <input type="text" class="form-control" value="" placeholder="Тэги (опционально, через запятую)" name="tags">
+%end
+
+%if u.kvitok:
+        <input type="hidden" name="kvitok" value="{{u.kvitok}}">
+%else:
+        <input type="text" class="form-control" value="" placeholder="Авторизации нет! Введите квиток доступа" name="kvitok">
+%end
+
+  <button class="button success" type="submit">Отправить комментарий</button>
+</form>
+
+    </div></div></div>
+
+%include ('02.tpl',u=u)

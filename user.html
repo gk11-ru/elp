@@ -1,0 +1,41 @@
+%from api import sx
+%include ('01.tpl',u=u,title=u.uname or 'auth')
+<body>
+%include ('01b.tpl',u=u,ea='',title=u.uname or 'auth',now='forum')
+
+            <div class="grid-container">
+                <div class="large-12 cell">
+
+<h3>Информация об авторизации</h3>
+
+%if u.check():
+
+<p>Имя: {{u.uname}}</p>
+<p>Адрес: {{u.uaddr}}</p>
+<p>Авторизация: принята</p>
+
+<form method="post" action="/user/auth"><input type="submit" class="button" value="Разлогиниться"></form>
+
+<p>Квиток доступа (возможно использовать на доверяющих сайтах, или авторизироваться <a href="/user/auth">по нему</a>)</p>
+<input type="text" value=":{{u.kvitok}}:" style="width:100%">
+
+
+%else:
+
+%if u.uname:
+<p><s>Поддельное</s> имя: {{u.uname}}</p>
+%end
+%if u.uaddr:
+<p><s>Поддельный</s> адрес: {{u.uaddr}}</p>
+%end
+<p>Авторизация: нет</p>
+
+<p><a href="http://u.gk11.ru/sign/reg">регистрация</a> или <a href="http://u.gk11.ru/sign/login">войти</a> (или ввести <a href="/user/auth">квиток</a>)</p>
+
+%end
+
+
+                </div>
+            </div>
+
+%include('02.tpl',u=u)

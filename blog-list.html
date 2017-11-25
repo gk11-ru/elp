@@ -1,0 +1,114 @@
+%from api import sx, echo_desc
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="A layout example that shows off a blog page with a list of posts.">
+%if get('tag'):
+    <title>тэг: {{sx.b64d(get('tag'))}}</title>
+%else:
+    <title>Блог {{ea}}</title>
+%end
+    
+    <link rel="stylesheet" href="/s/pure-min.css">
+    <link rel="stylesheet" href="/s/font-awesome.css">
+    
+    <!--[if lte IE 8]>
+        <link rel="stylesheet" href="/s/grids-responsive-old-ie-min.css">
+    <![endif]-->
+    <!--[if gt IE 8]><!-->
+        <link rel="stylesheet" href="/s/grids-responsive-min.css">
+    <!--<![endif]-->
+    
+    
+        <!--[if lte IE 8]>
+            <link rel="stylesheet" href="/s/blog-old-ie.css">
+        <![endif]-->
+        <!--[if gt IE 8]><!-->
+            <link rel="stylesheet" href="/s/blog.css">
+        <!--<![endif]-->
+</head>
+<body>
+
+
+
+
+
+
+
+<div id="layout" class="pure-g">
+    <div class="content pure-u-1">
+        <div>
+            <!-- A wrapper for all the blog posts -->
+            <div class="posts">
+%if get('tag'):
+                <h1 class="content-subhead"><A href="/tag/{{get('tag')}}">{{sx.b64d(get('tag'))}}</a> сообщения по тэгу</h1>
+%else:
+                <h1 class="content-subhead"><a href="/forum/{{ea}}">{{ea}}</a> {{echo_desc(ea)}}</h1>
+%end
+
+                <!-- A single blog post -->
+
+%for n in reversed(blogs[-30-(pge*30):][:30]):
+%o = msgs[n]
+                <section class="post">
+                    <header class="post-header">
+
+                        <h2 class="post-title"><a href="/msg/{{n}}">{{o.title}}</a></h2>
+
+                        <p class="post-meta">
+                            {{o.who}} @  {{sx.dateg(o.date,'%d.%m.%y %H:%M')}} UTC
+%if o.tags:
+%for i,tag in enumerate(o.tags.split(',')):
+<a class="post-category post-category-{{i % 5}}" href="/tag/{{tag}}">{{sx.b64d(tag)}}</a>
+%end
+%end
+                        </p>
+                    </header>
+
+                    <div class="post-description">
+                        <p>
+            {{!sx.rend(o.txt.decode('utf-8'))}}
+                        </p>
+                    </div>
+
+%commline = '*' * comms[n]
+%commline = commline.replace('*****','<i class="fa fa-fw fa-comment" style="color:red"></i>')
+%commline = commline.replace('*','<i class="fa fa-fw fa-comment" style="color:lightgreen"></i>')
+
+                <h3><a href="/msg/{{n}}" title="{{sx.tri_fmt(comms[n])}}">{{!commline}}</a></h3>
+
+                </section>
+%end
+
+%if not defined('tag'):
+        <p><a class="pure-button" href="/new/blog/{{ea}}/-/-">Новая запись</a></p>
+%end
+
+
+            </div>
+
+            <div class="footer">
+                <div class="pure-menu pure-menu-horizontal">
+                    <ul>
+                        <li class="pure-menu-item"><a href="/start" class="pure-menu-link">Старт</a></li>
+%if defined('ea'):
+                        <li class="pure-menu-item"><a href="/forum/{{ea}}" class="pure-menu-link">Форум</a></li>
+                        <li class="pure-menu-item"><a href="/echo/{{ea}}" class="pure-menu-link">Конференция</a></li>
+%end
+<!--                        <li class="pure-menu-item"><a href="/lenta" class="pure-menu-link">Лента</a></li> -->
+                        <li class="pure-menu-item"><a href="/new/blog/{{ea}}/-/-" class="pure-menu-link">Новое</a></li>
+                        <li class="pure-menu-item"><a href="/blog/{{ea}}?page={{pge+2}}" class="pure-menu-link">Ещё 30</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+</body>
+</html>

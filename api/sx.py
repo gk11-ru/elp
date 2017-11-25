@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-import time, bottle, base64, hashlib
+import time, bottle, base64, hashlib, re
 from splitparser import sp
 
 class mydict(dict):
@@ -27,20 +27,6 @@ def tri_fmt(tx,tri=[u'комментарий',u'комментария',u'ком
     if tx % 100 in range(10,21): return unicode(tx) + u' ' + tri[2]
     return unicode(tx) + u' ' + tri[{2:1,3:1,4:1,1:0}.get(tx % 10,2)]
 
-#def ts_get(d,f=None):
-#    return time.strptime(d, f or '%d.%m.%Y %H:%M')
-#def ts_get(d,f=None):
-#    dat, tim = d.split()
-#    dmy = dat.replace('.','/').replace('-','/').split('/')
-#    if len(dmy) > 2 and len(dmy[2]) == 2:
-#        dmy[2] = '20' + dmy[2]
-#    elif len(dmy) == 2:
-#        dmy.append( dateg(int(time.time()),'%Y') )
-#    dat = '/'.join(dmy)
-#    d = dat + ' ' + tim
-#    return int(time.mktime(time.strptime(d, f or r'%d/%m/%Y %H:%M:%S')))
-
-
 def gts():
     return int(time.time())
 
@@ -63,3 +49,11 @@ def b32c(s):
 
 def b32d(s):
     return base64.b32decode(s)
+
+def echo_flt(ea):
+    rr = re.compile(r'^[a-z0-9_!.-]{3,120}$')
+    if rr.match(ea) and '.' in ea: return True
+
+def msg_flt(msgid):
+    rr = re.compile(r'^[a-z0-9A-Z]{20}$')
+    if rr.match(msgid): return True

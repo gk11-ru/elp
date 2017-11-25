@@ -83,7 +83,10 @@
 %end
 
 %if not defined('tag'):
-        <p><a class="pure-button" href="/new/blog/{{ea}}/-/-">Новая запись</a></p>
+<p>
+<a class="pure-button" href="/new/blog/{{ea}}/-/-">Новая запись</a>
+<a class="pure-button" href="/blog/{{ea}}?page={{pge+2}}">Ещё 30</a>
+</p>
 %end
 
 

@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from sx import mydict, gts, hsh, b64u
+from sx import mydict, gts, hsh, b64u, msg_flt, echo_flt
 import fo, msghook
 from fo import gm, lst, rf, wf, af
 
@@ -74,6 +74,8 @@ def accept_msg(rq_raw):
     if rq:
         date = str(gts())
         msgid = rq.msgid
+        if not msg_flt(msgid):
+            return
         o = rq
         blob = fo.obj_to_file(o).encode('utf-8')
         write_msg(o,msgid,blob,date,True)

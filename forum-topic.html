@@ -16,9 +16,11 @@
 <td><b>{{o.who}}</b> для {{o.to}}</td>
 <td>{{sx.dateg(o.date)}} UTC</td>
 <td>{{o.addr}}</td>
-<td>{{o.msgid}}</td>
+<td><a href="/q/{{o.msgid}}" style="color:grey"><small>{{o.msgid}}</small></a></td>
 <td>{{o.ea}}</td>
-<td>{{o.title}}</td>
+%if o.repto:
+<td><a style="color:grey" href="#go_{{o.repto}}" title="{{o.title}}"><small>{{o.title.decode('utf-8')[:30]}}{{'...' if len(o.title.decode('utf-8')) > 24 else ''}}</small></a></td>
+%end
 <td><a href="/new/forum/{{topic[2]}}/{{topic[5]}}/{{x}}">ответить</a></td>
 </tr></table>
 <div class="callout clearfix">{{!sx.rend(o.txt.decode('utf-8'))}}</div>

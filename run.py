@@ -104,6 +104,12 @@ def lenta_list():
     mo = [api.get_msg(n.split()[0]) for n in reversed(api.lst('m.accepted'))]
     return template('echoarea.html',mo=mo,title='Лента сообщений',u=u(),ea='',desc='все сообщения всех эх',pge=0)
 
+@route('/q/<ml_:path>')
+def msg_list(ml_):
+    ml = ml_.strip('/').split('/')
+    mo = [api.get_msg(n.split()[0]) for n in ml]
+    return template('echoarea.html',mo=mo,desc='',u=u(),ea='',title='Сообщения' if len(ml) > 1 else ml[0],pge=-1)
+
 
 @route('/new/<typ>/<ea>/<topicid>/<repto>')
 def reply_form(typ,ea,topicid,repto):

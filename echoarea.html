@@ -9,7 +9,9 @@
 
 <h1>{{title}} <small>{{desc}}</small></h1>
 
-%for o in mo[(pge*80):][:80]:
+%mol = mo[(pge*80):][:80] if pge >= 0 else mo
+
+%for o in mol:
 <div class="callout {{'secondary' if o.repto else 'primary'}}">
 
 <span class="pull-right">
@@ -22,7 +24,7 @@
 <a href="/carbon/_{{sx.hsh(o.who)}}/{{o.who}}">{{o.who}}</a>
 to
 <a href="/carbon/{{sx.hsh(o.to)}}/{{o.to}}">{{o.to}}</a>
-{{sx.dateg(o.date)}} : <b>{{o.title}}</b><br><br>
+{{sx.dateg(o.date)}} : <b><a href="/topic/{{o.topicid}}#go_{{o.msgid}}" style="color:black">{{o.title}}</a></b><br><br>
 <p>{{!sx.rend(o.txt.decode('utf-8'))}}</p>
 </div>
 %end

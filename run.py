@@ -35,6 +35,20 @@ def echo_bundle(f):
         out += [x for x in api.lst('e/%s' % n)]
     return '\n'.join(out)
 
+@route('/u/all')
+def all_bundle():
+    response.content_type = 'text/plain; charset=utf-8'
+    out = ''
+    el, fl = {}, api.lst('e.list')
+    for ea in fl:
+        el[ea] = api.lst('e/%s' % ea)
+    for n in [x.split()[0] for x in api.lst('m.accepted')]:
+        for ea in fl:
+            if n in el[ea]:
+                out += '%s:%s\n' % (n,ea)
+                break
+    return out
+
 @route('/u/m/<f:path>')
 def msg_bundle(f):
     response.content_type = 'text/plain; charset=utf-8'

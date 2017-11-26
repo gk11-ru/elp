@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from sx import mydict, gts, hsh, b64u, msg_flt, echo_flt
+from sx import mydict, gts, hsh, b64u, msg_flt, echo_flt, b64d
 import fo, msghook
 from fo import gm, lst, rf, wf, af
 
@@ -47,8 +47,8 @@ def write_msg(o,msgid,blob,date,newflag):
         af('data/et/%s' % o.ea, '%s\n' % msgid)
         wf('data/topic/%s' % msgid, u'%s\n%s\n%s\n%s\n%s\n%s\n' % (o.date,o.title,o.ea,o.who,o.addr,msgid),True)
         if o.tags:
-            for n in o.tags:
-                wf('data/ntag/%s' % hsh(n), n)
+            for n in o.tags.split(','):
+                wf('data/ntag/%s' % hsh(n), b64d(n))
                 af('data/tags/%s' % hsh(n), '%s\n' % msgid)
 
 

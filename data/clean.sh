@@ -10,5 +10,9 @@ rm -r tags
 mkdir tags
 rm -r topic
 mkdir topic
+rm -r ntag
+mkdir ntag
+rm -r nuser
+mkdir nuser
 > m.accepted
 > topic.list

@@ -33,6 +33,7 @@ def write_msg(o,msgid,blob,date,newflag):
     wf('data/m/%s' % msgid , blob)
     af('data/e/%s' % o.ea, '%s\n' % msgid)
     af('data/m.accepted', '%s %s\n' % (msgid,date))
+    wf('data/nuser/%s' % hsh(o.who.encode('utf-8')), o.who.encode('utf-8'))
     af('data/carbon/_%s' % hsh(o.who.encode('utf-8')), '%s\n' % msgid)
     af('data/carbon/%s' % hsh(o.to.encode('utf-8')), '%s\n' % msgid)
     if msgid != o.topicid:
@@ -47,6 +48,7 @@ def write_msg(o,msgid,blob,date,newflag):
         wf('data/topic/%s' % msgid, u'%s\n%s\n%s\n%s\n%s\n%s\n' % (o.date,o.title,o.ea,o.who,o.addr,msgid),True)
         if o.tags:
             for n in o.tags:
+                wf('data/ntag/%s' % hsh(n), n)
                 af('data/tags/%s' % hsh(n), '%s\n' % msgid)
 
 

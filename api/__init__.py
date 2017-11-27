@@ -25,8 +25,7 @@ def check_check(rq):
 
 def mk_tags(s):
     tags = [x.strip().lower().encode('utf-8') for x in s.split(',')]
-    tagshash = ','.join([b64u(x) for x in tags])
-    return tags,tagshash
+    return ','.join([b64u(x) for x in tags])
 
 
 def write_msg(o,msgid,blob,date,newflag):
@@ -60,7 +59,7 @@ def create_msg(rq_raw,u):
     if rq.repto:
         o.repto=rq.repto
     if rq.tags and not rq.topicid:
-        o.tags, o.tagshash = mk_tags(rq.tags)
+        o.tags = mk_tags(rq.tags)
     blob = fo.obj_to_file(o,60).encode('utf-8')
     msgid = hsh(blob)
     o.topicid = rq.topicid or msgid

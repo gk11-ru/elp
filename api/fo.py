@@ -20,7 +20,7 @@ def rf(fn,utf=False):
 def obj_to_file(o,sep=1):
     ''' transofm object to ii msg '''
     repto = '/repto/%s' % o.repto if o.repto else ''
-    tags = '/tags/%s' % o.tagshash if o.tagshash else ''
+    tags = '/tags/%s' % o.tags if o.tags else ''
     header = 'ii/ok%s/topicid/%s%s' % (repto, o.topicid, tags)
     return '%s\n%s\n%s\n%s\n%s\n%s\n%s\n\n%s' % (header, o.ea, int(o.date) // sep, o.who, o.addr, o.to, o.title, o.txt)
 

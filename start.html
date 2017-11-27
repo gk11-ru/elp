@@ -1,4 +1,4 @@
-%from api import sx, echo_desc, echolist, lst
+%from api import sx, echo_desc, echolist, lst, get_msg
 <!doctype html>
 <html class="no-js" lang="en">
 <head>
@@ -24,7 +24,8 @@
                 <div class="grid-x">
 
 <div class="medium-8 cell" style="padding-right:15px">
-%for o in mo[:30]:
+%for on in mo[:30]:
+%o = get_msg(on)
 
 <div class="callout {{'secondary' if o.repto else 'primary'}}">
 <small style="color:darkgrey"><a href="/topic/{{o.topicid}}">{{o.title}}</a> @ <a href="/echo/{{o.ea}}">{{o.ea}}</a> : {{o.who}} to {{o.to}}</small>

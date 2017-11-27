@@ -14,7 +14,7 @@ def redir_page():
 
 @route('/start')
 def start_page():
-    mo = [api.get_msg(n.split()[0]) for n in reversed(api.lst('m.accepted'))]
+    mo = [x.split()[0] for x in reversed(api.lst('m.accepted'))]
     return template('start.html',out=api.forums_list(),mo=mo,u=u())
 
 @route('/favicon.ico')

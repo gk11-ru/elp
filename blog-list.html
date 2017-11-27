@@ -1,4 +1,4 @@
-%from api import sx, echo_desc
+%from api import sx, echo_desc, get_msg
 <!doctype html>
 <html lang="en">
 <head>
@@ -52,7 +52,7 @@
 
 %tmp = list(reversed(blogs))[(pge*30):][:30]
 %for n in tmp:
-%o = msgs[n]
+%o = get_msg(n)
                 <section class="post">
                     <header class="post-header">
 

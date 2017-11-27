@@ -81,9 +81,8 @@ def blog_list(ea=''):
         ea = api.echolist()[0]
     blogs = api.lst('et/%s' % ea)
     comms = mydict({n:len(api.lst('topic/%s' % n))-6 for n in blogs})
-    msgs = mydict({n:api.get_msg(n) for n in blogs})
     pge = request.query.page or '1'
-    return template ('blog-list.html',ea=ea,blogs=blogs,msgs=msgs,comms=comms,pge=int(pge)-1)
+    return template ('blog-list.html',ea=ea,blogs=blogs,comms=comms,pge=int(pge)-1)
 
 @route('/msg/<topicid>')
 def blog_topic(topicid):

@@ -92,10 +92,10 @@ def blog_topic(topicid):
 
 @route('/tag/<tag>')
 def blog_tag(tag):
-    blogs = api.lst('tags/%s' % hsh(b64d(tag)))
+    blogs = api.lst('tags/%s' % hsh(tag))
     comms = mydict({n:len(api.lst('topic/%s' % n))-6 for n in blogs})
     msgs = mydict({n:api.get_msg(n) for n in blogs})
-    return template ('blog-list.html',blogs=blogs,msgs=msgs,comms=comms,tag=tag,ea='',pge=0)
+    return template ('blog-list.html',blogs=blogs,msgs=msgs,comms=comms,tag=tag,ea='',pge=-1)
 
 @route('/echo/<ea>')
 def echo_list(ea):

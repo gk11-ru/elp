@@ -34,12 +34,14 @@
 
 %end
 
+<p><a href="/lenta"><i class="fa fa-fw fa-bullhorn"></i> Лента сообщений</a></p>
+
 </div>
 <div class="medium-4 cell">
 
 
 %for n,tlst in out:
-<h4><a href="/forum/{{n}}" style="color:black">{{n}}</a> <small><a href="/blog/{{n}}">блог</a> <a href="/echo/{{n}}">эха</a></small></h4>
+<h4> <a href="/forum/{{n}}"><i class="fa fa-fw fa-arrow-circle-right"></i></a><a href="/forum/{{n}}" style="color:black">{{n}}</a> <a href="/blog/{{n}}" style="font-size:50%" title="Представление в виде блога"><i class="fa fa-fw fa-edit"></i></a> <a href="/echo/{{n}}" title="Представление в виде эхоконференции" style="font-size:50%"><i class="fa fa-fw fa-list"></i></a></h4>
 <table class="hover">
 %for x in reversed(tlst[-5:]):
                 <tr><td><a href="/topic/{{x.topic[5]}}">{{x.topic[1]}}</a></td><td>{{len(x.topic)-5}}</td></tr>

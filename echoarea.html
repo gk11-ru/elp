@@ -1,4 +1,4 @@
-%from api import sx
+%from api import sx, get_msg
 %include ('01.tpl',u=u,title=title)
 <body>
 %include ('01b.tpl',u=u,ea=ea,title=title,now='echo')
@@ -11,7 +11,8 @@
 
 %mol = mo[(pge*80):][:80] if pge >= 0 else mo
 
-%for o in mol:
+%for on in mol:
+%o = get_msg(on)
 <div class="callout {{'secondary' if o.repto else 'primary'}}">
 
 <span class="pull-right">

@@ -100,13 +100,13 @@ def blog_tag(tag):
 
 @route('/echo/<ea>')
 def echo_list(ea):
-    mo = [api.get_msg(n) for n in reversed(api.lst('e/%s' % ea))]
+    mo = [n for n in reversed(api.lst('e/%s' % ea))]
     pge = request.query.page or '1'
     return template('echoarea.html',mo=mo,title=ea,ea=ea,u=u(),desc=api.echo_desc(ea),pge=int(pge)-1)
 
 @route('/carbon/<carbon>/<uname:path>')
 def carbon_copy(carbon,uname):
-    mo = [api.get_msg(n) for n in reversed(api.lst('carbon/%s' % carbon))]
+    mo = [n for n in reversed(api.lst('carbon/%s' % carbon))]
     if carbon.startswith('_'):
         title = 'Сообщения от пользователя %s' % uname
     else:
@@ -115,13 +115,13 @@ def carbon_copy(carbon,uname):
 
 @route('/lenta')
 def lenta_list():
-    mo = [api.get_msg(n.split()[0]) for n in reversed(api.lst('m.accepted'))]
+    mo = [n.split()[0] for n in reversed(api.lst('m.accepted'))]
     return template('echoarea.html',mo=mo,title='Лента сообщений',u=u(),ea='',desc='все сообщения всех эх',pge=0)
 
 @route('/q/<ml_:path>')
 def msg_list(ml_):
     ml = ml_.strip('/').split('/')
-    mo = [api.get_msg(n.split()[0]) for n in ml]
+    mo = [n.split()[0] for n in ml]
     return template('echoarea.html',mo=mo,desc='',u=u(),ea='',title='Сообщения' if len(ml) > 1 else ml[0],pge=-1)
 
 
